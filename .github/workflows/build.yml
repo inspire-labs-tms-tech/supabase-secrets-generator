@@ -44,26 +44,18 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v4
 
-      - name: download macos build
-        id: macos
+      - name: download build
+        id: download
         uses: actions/download-artifact@v3
         with:
-          name: dist/macos-latest
-          path: dist
-
-      - name: download ubuntu build
-        id: ubuntu
-        uses: actions/download-artifact@v3
-        with:
-          name: dist/ubuntu-latest
+          name: supabase-secrets-generator
           path: dist
 
       - name: release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ${{ steps.macos.outputs.download-path }}
-            ${{ steps.ubuntu.outputs.download-path }}
+            ${{ steps.download.outputs.download-path }}
           tag_name: latest
           name: ${{ github.event.repository.updated_at }}
           fail_on_unmatched_files: true
