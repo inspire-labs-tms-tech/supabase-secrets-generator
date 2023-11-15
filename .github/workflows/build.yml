@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'windows-latest', 'ubuntu-latest', 'macos-latest' ]
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: install requirements
+        run: pip install -r requirements.txt
+
+      - name: build
+        run: pyinstaller --noconfirm --clean --onefile --name supabase-secrets-generator main.py
+
+      - name: publish
+        uses: actions/upload-artifact@v3
+        with:
+          name: supabase-secrets-generator-${{ matrix.os }}
+          path: dist/supabase-secrets-generator
