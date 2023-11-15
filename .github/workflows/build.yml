@@ -28,11 +28,14 @@ jobs:
       - name: build
         run: pyinstaller --noconfirm --clean --onefile --name supabase-secrets-generator main.py
 
+      - name: move file
+        run: mkdir -p dist/${{ matrix.os }} && mv dist/supabase-secrets-generator dist/${{ matrix.os }}/supabase-secrets-generator
+
       - name: publish
         uses: actions/upload-artifact@v3
         with:
-          name: supabase-secrets-generator-${{ matrix.os }}
-          path: dist/supabase-secrets-generator
+          name: supabase-secrets-generator
+          path: dist/${{ matrix.os }}
 
   release:
     needs: build
@@ -41,20 +44,26 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v4
 
-      - name: download builds
-        id: download
+      - name: download macos build
+        id: macos
         uses: actions/download-artifact@v3
+        with:
+          name: dist/macos-latest
+          path: dist
 
-      - name: Display structure of downloaded files
-        run: ls -R
+      - name: download ubuntu build
+        id: ubuntu
+        uses: actions/download-artifact@v3
+        with:
+          name: dist/ubuntu-latest
+          path: dist
 
       - name: release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ${{ steps.download.outputs.download-path }}
-            /home/runner/work/supabase-secrets-generator/supabase-secrets-generator/supabase-secrets-generator-macos-latest
-            /home/runner/work/supabase-secrets-generator/supabase-secrets-generator/supabase-secrets-generator-ubuntu-latest
+            ${{ steps.macos.outputs.download-path }}
+            ${{ steps.ubuntu.outputs.download-path }}
           tag_name: latest
           name: ${{ github.event.repository.updated_at }}
           fail_on_unmatched_files: true
