@@ -58,11 +58,8 @@ jobs:
         run: tar -czvf ubuntu.tar.gz ./dist/ubuntu-latest/supabase-secrets-generator
 
       - name: release
-        uses: softprops/action-gh-release@v1
+        uses: ncipollo/release-action@v1
         with:
-          files: |
-            ubuntu.tar.gz
-            macos.tar.gz
-          tag_name: latest
+          tag: latest
           name: ${{ github.event.repository.updated_at }}
-          fail_on_unmatched_files: true
+          artifacts: "ubuntu.tar.gz,macos.tar.gz"
