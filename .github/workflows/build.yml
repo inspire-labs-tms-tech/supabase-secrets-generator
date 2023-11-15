@@ -52,22 +52,10 @@ jobs:
           path: dist
 
       - name: macos-tar-gz
-        uses: a7ul/tar-action@v1.1.0
-        with:
-          command: c
-          cwd: .
-          files: |
-            ./dist/macos-latest/supabase-secrets-generator
-          outPath: macos.tar.gz
+        run: tar -czvf macos.tar.gz ./dist/macos-latest/supabase-secrets-generator
 
       - name: ubuntu-tar-gz
-        uses: a7ul/tar-action@v1.1.0
-        with:
-          command: c
-          cwd: .
-          files: |
-            ./dist/ubuntu-latest/supabase-secrets-generator
-          outPath: ubuntu.tar.gz
+        run: tar -czvf ubuntu.tar.gz ./dist/ubuntu-latest/supabase-secrets-generator
 
       - name: release
         uses: softprops/action-gh-release@v1
