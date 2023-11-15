@@ -42,12 +42,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: download builds
+        id: download
         uses: actions/download-artifact@v3
 
       - name: release
         uses: softprops/action-gh-release@v1
         with:
           files: |
+            ${{ steps.download.outputs.download-path }}
             /home/runner/work/supabase-secrets-generator/supabase-secrets-generator/supabase-secrets-generator-macos-latest
             /home/runner/work/supabase-secrets-generator/supabase-secrets-generator/supabase-secrets-generator-ubuntu-latest
           tag_name: latest
