@@ -38,5 +38,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: dist/supabase-secrets-generator
+          tag_name: ${{ matrix.os }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
