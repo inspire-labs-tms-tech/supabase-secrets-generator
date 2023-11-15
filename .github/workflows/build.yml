@@ -61,6 +61,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: latest
-          name: ${{ github.event.repository.updated_at }}
+          name: latest
           artifacts: "ubuntu.tar.gz,macos.tar.gz"
           allowUpdates: true
