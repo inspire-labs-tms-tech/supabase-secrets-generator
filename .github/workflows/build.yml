@@ -11,14 +11,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ 'windows-latest', 'ubuntu-latest', 'macos-latest' ]
+        os: [ 'ubuntu-latest', 'macos-latest' ]
 
     steps:
       - name: checkout repository
         uses: actions/checkout@v4
 
       - name: setup python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.9
 
@@ -33,3 +33,10 @@ jobs:
         with:
           name: supabase-secrets-generator-${{ matrix.os }}
           path: dist/supabase-secrets-generator
+
+      - name: release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/supabase-secrets-generator
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
