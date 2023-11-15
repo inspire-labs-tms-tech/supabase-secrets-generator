@@ -50,6 +50,7 @@ jobs:
           files: |
             supabase-secrets-generator-ubuntu-latest
             supabase-secrets-generator-macos-latest
-          tag_name: ${{ matrix.os }}
+          tag_name: latest
+          name: ${{ github.event.repository.updated_at }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
