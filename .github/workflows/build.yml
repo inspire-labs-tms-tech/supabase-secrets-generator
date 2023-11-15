@@ -52,10 +52,10 @@ jobs:
           path: dist
 
       - name: macos-tar-gz
-        run: tar -czvf macos.tar.gz ./dist/macos-latest/supabase-secrets-generator
+        run: tar -czvf macos.tar.gz --directory=./dist/macos-latest supabase-secrets-generator
 
       - name: ubuntu-tar-gz
-        run: tar -czvf ubuntu.tar.gz ./dist/ubuntu-latest/supabase-secrets-generator
+        run: tar -czvf ubuntu.tar.gz --directory=./dist/ubuntu-latest supabase-secrets-generator
 
       - name: release
         uses: ncipollo/release-action@v1
