@@ -51,11 +51,13 @@ jobs:
           name: supabase-secrets-generator
           path: dist
 
+      - run: ls && cd dist && ls
+
       - name: release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ${{ steps.download.outputs.download-path }}
+            dist/ubuntu-latest/supabase-secrets-generator
           tag_name: latest
           name: ${{ github.event.repository.updated_at }}
           fail_on_unmatched_files: true
