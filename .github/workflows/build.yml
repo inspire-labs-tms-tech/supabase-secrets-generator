@@ -51,13 +51,30 @@ jobs:
           name: supabase-secrets-generator
           path: dist
 
-      - run: ls && cd dist && ls
+      - name: macos-tar-gz
+        uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          cwd: .
+          files: |
+            ./dist/macos-latest/supabase-secrets-generator
+          outPath: macos.tar.gz
+
+      - name: ubuntu-tar-gz
+        uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          cwd: .
+          files: |
+            ./dist/ubuntu-latest/supabase-secrets-generator
+          outPath: ubuntu.tar.gz
 
       - name: release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            dist/ubuntu-latest/supabase-secrets-generator
+            ubuntu.tar.gz
+            macos.tar.gz
           tag_name: latest
           name: ${{ github.event.repository.updated_at }}
           fail_on_unmatched_files: true
