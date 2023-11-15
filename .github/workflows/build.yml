@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: supabase-secrets-generator
-          path: dist/${{ matrix.os }}
+          path: dist
 
   release:
     needs: build
