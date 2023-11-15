@@ -34,10 +34,22 @@ jobs:
           name: supabase-secrets-generator-${{ matrix.os }}
           path: dist/supabase-secrets-generator
 
+  release:
+    needs: build
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: download builds
+        uses: actions/download-artifact@v3
+
       - name: release
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/supabase-secrets-generator
+          files: |
+            supabase-secrets-generator-ubuntu-latest
+            supabase-secrets-generator-macos-latest
           tag_name: ${{ matrix.os }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
