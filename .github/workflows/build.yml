@@ -54,5 +54,4 @@ jobs:
             /home/runner/work/supabase-secrets-generator/supabase-secrets-generator/supabase-secrets-generator-ubuntu-latest
           tag_name: latest
           name: ${{ github.event.repository.updated_at }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_unmatched_files: true
