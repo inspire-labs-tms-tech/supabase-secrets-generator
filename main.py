@@ -5,6 +5,7 @@ import secrets
 import typer
 import string
 import random
+from uuid import uuid4
 
 cli = typer.Typer()
 
@@ -21,6 +22,12 @@ def get_random_password(length: int = 64):
         typer.secho("enter a number greater than 0", fg=typer.colors.RED)
         raise typer.Exit(1)
     print(random_password(length))
+
+
+@cli.command(name="uuid")
+def get_uuid():
+    """generate a random uuid (v4)"""
+    print(uuid4())
 
 
 def anon_payload(iat: datetime = datetime.utcnow()):
