@@ -3,8 +3,24 @@ import json
 from datetime import datetime
 import secrets
 import typer
+import string
+import random
 
 cli = typer.Typer()
+
+
+def random_password(length: int) -> str:
+    chars = string.ascii_letters + string.digits
+    return str("").join(random.choices(chars, k=length))
+
+
+@cli.command(name="random-password")
+def get_random_password(length: int = 64):
+    """generate a random password of uppercase letters, lowercase letters, and numbers"""
+    if length < 1:
+        typer.secho("enter a number greater than 0", fg=typer.colors.RED)
+        raise typer.Exit(1)
+    print(random_password(length))
 
 
 def anon_payload(iat: datetime = datetime.utcnow()):
